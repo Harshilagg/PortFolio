@@ -23,7 +23,7 @@ export const PERSONAL = {
     "Competitive Programmer",
     "AI/ML Enthusiast",
   ],
-  bio: "I build secure, scalable systems — from real-time platforms to AI-powered pipelines. IIT Kharagpur grad with a passion for competitive programming, cybersecurity, and crafting pixel-perfect interfaces.",
+  bio: "I build secure, scalable systems — from real-time platforms to AI-powered pipelines. IIT Kharagpur grad with a passion for competitive programming, cybersecurity, and crafting clean, considered interfaces.",
 } as const;
 
 export type Project = {
@@ -79,7 +79,7 @@ export const PROJECTS: Project[] = [
       "Real-time data sync patterns with Firebase listeners",
       "Mobile-first architecture design principles",
     ],
-    color: "#FFD34E",
+    color: "#6C63FF",
   },
   {
     slug: "free-chat-android",
@@ -189,7 +189,7 @@ export const PROJECTS: Project[] = [
       "GUI development with real-time state management",
       "Performance optimization for compute-intensive algorithms",
     ],
-    color: "#FFD34E",
+    color: "#6C63FF",
   },
   {
     slug: "ai-document-processor",
@@ -353,7 +353,7 @@ export const EXPERIENCE: Experience[] = [
       "SendGrid",
       "Recharts",
     ],
-    color: "#FFD34E",
+    color: "#6C63FF",
   },
 ];
 
@@ -381,7 +381,7 @@ export const SKILLS: SkillCategory[] = [
   {
     name: "Backend",
     icon: "🛡️",
-    color: "#FFD34E",
+    color: "#6C63FF",
     skills: [
       { name: "Node.js / Express", level: 88 },
       { name: "FastAPI / Django", level: 80 },
@@ -433,7 +433,7 @@ export const SKILLS: SkillCategory[] = [
   {
     name: "Databases",
     icon: "💾",
-    color: "#FFD34E",
+    color: "#6C63FF",
     skills: [
       { name: "PostgreSQL / MySQL", level: 85 },
       { name: "MongoDB", level: 82 },
@@ -503,13 +503,12 @@ export const ACHIEVEMENTS = [
 ];
 
 export const NAV_LINKS = [
-  { label: "01. HOME", href: "#hero" },
-  { label: "02. ABOUT", href: "#about" },
-  { label: "03. WORK", href: "#projects" },
-  { label: "04. EXPERIENCE", href: "#experience" },
-  { label: "05. SKILLS", href: "#skills" },
-  { label: "06. COMPETE", href: "#competitive" },
-  { label: "07. CONTACT", href: "#contact" },
+  { label: "About", href: "#about" },
+  { label: "Work", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Skills", href: "#skills" },
+  { label: "Compete", href: "#competitive" },
+  { label: "Contact", href: "#contact" },
 ] as const;
 
 export const TERMINAL_COMMANDS: Record<string, string> = {
