@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { COMPETITIVE } from "@/lib/data";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { PixelDivider } from "@/components/shared/PixelDivider";
+import { Divider } from "@/components/shared/Divider";
 import { Trophy } from "lucide-react";
 
 function AnimatedCounter({ value, inView }: { value: number; inView: boolean }) {
@@ -40,11 +40,11 @@ function CPCard({ profile, index }: { profile: (typeof COMPETITIVE)[0]; index: n
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="group border-2 border-arcade-border bg-arcade-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-arcade-border-glow hover:shadow-[0_0_16px_rgba(255,211,78,0.06)]"
+      className="group panel panel-hover p-5 hover:-translate-y-1"
     >
       {/* Platform header */}
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-pixel text-[10px] text-arcade-white uppercase">
+        <h3 className="font-head text-[13px] font-semibold text-ink">
           {profile.platform}
         </h3>
         <Trophy size={14} style={{ color: profile.color }} />
@@ -52,7 +52,7 @@ function CPCard({ profile, index }: { profile: (typeof COMPETITIVE)[0]; index: n
 
       {/* Rating */}
       {profile.rating > 0 && (
-        <div className="mb-2 font-pixel text-2xl" style={{ color: profile.color }}>
+        <div className="mb-2 font-head text-2xl font-semibold" style={{ color: profile.color }}>
           <AnimatedCounter value={profile.rating} inView={inView} />
         </div>
       )}
@@ -60,7 +60,7 @@ function CPCard({ profile, index }: { profile: (typeof COMPETITIVE)[0]; index: n
       {/* Rank */}
       <div className="mb-3">
         <span
-          className="inline-block border px-2 py-0.5 font-pixel text-[8px] uppercase"
+          className="inline-block rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide"
           style={{
             color: profile.color,
             borderColor: profile.color + "44",
@@ -72,7 +72,7 @@ function CPCard({ profile, index }: { profile: (typeof COMPETITIVE)[0]; index: n
       </div>
 
       {/* Achievement */}
-      <p className="font-mono text-[11px] leading-relaxed text-arcade-muted">
+      <p className="font-mono text-[11px] leading-relaxed text-muted">
         {profile.achievement}
       </p>
 
@@ -82,7 +82,7 @@ function CPCard({ profile, index }: { profile: (typeof COMPETITIVE)[0]; index: n
           href={profile.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 inline-block font-mono text-[10px] transition-colors hover:text-arcade-yellow"
+          className="mt-3 inline-block font-mono text-[10px] transition-colors hover:text-accent"
           style={{ color: profile.color }}
         >
           View Profile →
@@ -97,8 +97,9 @@ export function CompetitiveProgramming() {
     <section id="competitive" className="section-padding px-6">
       <div className="mx-auto max-w-4xl">
         <SectionHeading
-          title="COMPETITIVE PROGRAMMING"
-          subtitle="Ranked profiles and competitive achievements."
+          eyebrow="Competitive programming"
+          title="Ranked profiles"
+          subtitle="Where I stack up on competitive platforms."
         />
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -107,7 +108,7 @@ export function CompetitiveProgramming() {
           ))}
         </div>
 
-        <PixelDivider className="mt-12" />
+        <Divider className="mt-12" />
       </div>
     </section>
   );

@@ -3,51 +3,51 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { PixelBorder } from "@/components/shared/PixelBorder";
-import { PixelDivider } from "@/components/shared/PixelDivider";
+import { Panel } from "@/components/shared/Panel";
+import { Divider } from "@/components/shared/Divider";
 import { PERSONAL } from "@/lib/data";
 
-const STATS = [
+const STRENGTHS = [
   {
     icon: "🧠",
-    label: "Intelligence",
+    label: "Systems & Architecture",
     value: 92,
     color: "#5AC8FA",
-    description: "Algorithm Optimization & System Design",
+    description: "Algorithm optimization & scalable system design",
     subSkills: ["Data Structures", "System Architecture", "Problem Solving"],
   },
   {
     icon: "⚡",
-    label: "Agility",
+    label: "Execution Speed",
     value: 85,
-    color: "#FFD34E",
-    description: "Rapid Prototyping & Sprint Execution",
+    color: "#6C63FF",
+    description: "Rapid prototyping & sprint execution",
     subSkills: ["Fast Learner", "Agile Methodology", "Iteration Speed"],
   },
   {
     icon: "🛡️",
-    label: "Defense",
+    label: "Security Mindset",
     value: 88,
     color: "#FF6B6B",
-    description: "Cybersecurity & Penetration Testing",
+    description: "Cybersecurity & penetration testing",
     subSkills: ["Network Security", "OWASP Top 10", "Ethical Hacking"],
   },
   {
     icon: "🔮",
-    label: "Wisdom",
+    label: "AI / ML Craft",
     value: 80,
     color: "#C084FC",
-    description: "AI/ML Knowledge & Strategic Thinking",
+    description: "LLM applications & strategic modeling",
     subSkills: ["LLM APIs", "RAG Pipelines", "Model Context Protocol"],
   },
 ];
 
-function StatBar({
+function StrengthBar({
   stat,
   index,
   inView,
 }: {
-  stat: (typeof STATS)[0];
+  stat: (typeof STRENGTHS)[0];
   index: number;
   inView: boolean;
 }) {
@@ -57,81 +57,48 @@ function StatBar({
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: 0.1 + index * 0.12, duration: 0.5 }}
     >
-      <PixelBorder
-        hover={true}
-        className="group flex flex-col gap-3 bg-arcade-card p-4 transition-all duration-300"
-      >
+      <Panel className="group flex flex-col gap-3 p-4">
         <div className="flex items-center gap-3">
-          <motion.div
-            className="flex h-10 w-10 items-center justify-center border-2 border-arcade-border bg-arcade-surface text-xl"
-            animate={inView ? {
-              boxShadow: [
-                `0 0 0px ${stat.color}00`,
-                `0 0 12px ${stat.color}44`,
-                `0 0 4px ${stat.color}22`,
-              ],
-            } : {}}
-            transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-          >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-surface text-lg">
             {stat.icon}
-          </motion.div>
+          </div>
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-1">
-              <h4 className="font-pixel text-[10px] text-arcade-white uppercase">
-                {stat.label}
-              </h4>
-              <motion.span
-                className="font-pixel text-xs"
-                style={{ color: stat.color }}
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ delay: 0.5 + index * 0.12 }}
-              >
-                {stat.value}
-              </motion.span>
+            <div className="mb-1 flex items-center justify-between">
+              <h4 className="font-head text-[13px] font-medium text-ink">{stat.label}</h4>
+              <span className="font-mono text-xs" style={{ color: stat.color }}>
+                {stat.value}%
+              </span>
             </div>
-            {/* Stat bar */}
-            <div className="h-2 w-full border border-arcade-border bg-arcade-bg">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface">
               <motion.div
-                className="h-full"
+                className="h-full rounded-full"
                 style={{ backgroundColor: stat.color }}
                 initial={{ width: 0 }}
                 animate={inView ? { width: `${stat.value}%` } : { width: 0 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 + index * 0.1 }}
-              >
-                <div
-                  className="h-full w-full"
-                  style={{
-                    backgroundImage: `repeating-linear-gradient(to right, transparent, transparent 4px, rgba(0,0,0,0.3) 4px, rgba(0,0,0,0.3) 5px)`,
-                  }}
-                />
-              </motion.div>
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 + index * 0.1 }}
+              />
             </div>
           </div>
         </div>
 
-        {/* Description */}
-        <p className="font-mono text-[10px] text-arcade-muted leading-relaxed">
-          {stat.description}
-        </p>
+        <p className="font-mono text-[11px] leading-relaxed text-muted">{stat.description}</p>
 
-        {/* Sub-skills (reveal on hover) */}
         <div className="flex flex-wrap gap-1 max-h-0 overflow-hidden transition-all duration-300 group-hover:max-h-20 group-hover:mt-1">
           {stat.subSkills.map((sub) => (
             <span
               key={sub}
-              className="border px-1.5 py-0.5 font-mono text-[8px] uppercase"
+              className="rounded-full border px-2 py-0.5 font-mono text-[10px]"
               style={{
                 borderColor: stat.color + "33",
                 color: stat.color,
-                backgroundColor: stat.color + "08",
+                backgroundColor: stat.color + "0d",
               }}
             >
               {sub}
             </span>
           ))}
         </div>
-      </PixelBorder>
+      </Panel>
     </motion.div>
   );
 }
@@ -144,45 +111,47 @@ export function About() {
     <section id="about" className="section-padding px-6">
       <div className="mx-auto max-w-5xl" ref={ref}>
         <SectionHeading
-          title="ABOUT PLAYER"
-          subtitle="Character backstory and core attributes."
+          eyebrow="About"
+          title="A little about me"
+          subtitle="Background, focus areas, and what drives the way I build."
         />
 
-        <div className="grid gap-8 md:grid-cols-2">
-          {/* Backstory */}
+        <div className="grid gap-6 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5 }}
           >
-            <PixelBorder className="h-full bg-arcade-card p-6">
-              <h3 className="mb-4 font-pixel text-[10px] text-arcade-yellow uppercase">Lore</h3>
-              <p className="font-mono text-sm leading-relaxed text-arcade-muted">
-                I am a Computer Science & Engineering student at {PERSONAL.education.institute}, driven by a passion for building scalable systems and participating in competitive programming.
+            <Panel className="h-full p-6">
+              <h3 className="mb-4 font-head text-sm font-semibold text-accent">Background</h3>
+              <p className="text-sm leading-relaxed text-muted">
+                I am a Computer Science &amp; Engineering student at {PERSONAL.education.institute}, driven by a passion for building scalable systems and participating in competitive programming.
               </p>
-              <p className="mt-4 font-mono text-sm leading-relaxed text-arcade-muted">
-                {PERSONAL.bio}
-              </p>
+              <p className="mt-4 text-sm leading-relaxed text-muted">{PERSONAL.bio}</p>
+
               <div className="mt-6 flex flex-wrap gap-2">
-                <span className="border border-arcade-border px-2 py-1 font-pixel text-[8px] text-arcade-muted uppercase">IIT Kharagpur</span>
-                <span className="border border-arcade-border px-2 py-1 font-pixel text-[8px] text-arcade-muted uppercase">CSE</span>
-                <span className="border border-arcade-border px-2 py-1 font-pixel text-[8px] text-arcade-muted uppercase">CGPA: {PERSONAL.education.cgpa}</span>
+                <span className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-muted">
+                  {PERSONAL.education.institute}
+                </span>
+                <span className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-muted">
+                  CSE
+                </span>
+                <span className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-muted">
+                  CGPA {PERSONAL.education.cgpa}
+                </span>
               </div>
 
-              {/* Achievements mini-section */}
-              <div className="mt-6 pt-4 border-t border-arcade-border">
-                <h4 className="mb-3 font-pixel text-[8px] text-arcade-blue uppercase tracking-wider">
-                  Achievements Unlocked
-                </h4>
-                <div className="space-y-2">
+              <div className="mt-6 border-t border-line pt-5">
+                <h4 className="mb-3 font-head text-xs font-semibold text-azure">Highlights</h4>
+                <div className="space-y-2.5">
                   {[
                     { text: "JEE Advanced — AIR 6339 (Top 2.25%)", icon: "🏆" },
                     { text: "KVPY Fellow — AIR 3531", icon: "🎖️" },
-                    { text: "Meta Hacker Cup 2024 — Round 1", icon: "⚔️" },
+                    { text: "Meta Hacker Cup 2024 — Round 1", icon: "⚡" },
                   ].map((achievement, i) => (
                     <motion.div
                       key={i}
-                      className="flex items-center gap-2 font-mono text-[10px] text-arcade-muted"
+                      className="flex items-center gap-2.5 text-[13px] text-muted"
                       initial={{ opacity: 0, x: -10 }}
                       animate={inView ? { opacity: 1, x: 0 } : {}}
                       transition={{ delay: 0.6 + i * 0.1 }}
@@ -193,18 +162,17 @@ export function About() {
                   ))}
                 </div>
               </div>
-            </PixelBorder>
+            </Panel>
           </motion.div>
 
-          {/* Core Stats — RPG style */}
           <div className="grid gap-3 content-start">
-            {STATS.map((stat, i) => (
-              <StatBar key={stat.label} stat={stat} index={i} inView={inView} />
+            {STRENGTHS.map((stat, i) => (
+              <StrengthBar key={stat.label} stat={stat} index={i} inView={inView} />
             ))}
           </div>
         </div>
 
-        <PixelDivider className="mt-16" />
+        <Divider className="mt-16" />
       </div>
     </section>
   );
