@@ -2,16 +2,18 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { GlitchText } from "./GlitchText";
+import { RevealText } from "./RevealText";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
+  eyebrow?: string;
   title: string;
   subtitle?: string;
   className?: string;
 }
 
 export function SectionHeading({
+  eyebrow,
   title,
   subtitle,
   className,
@@ -20,26 +22,33 @@ export function SectionHeading({
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <motion.div
-      ref={ref}
-      className={cn("mb-12 space-y-3", className)}
-      initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <h2 className="font-pixel text-sm tracking-widest text-arcade-yellow uppercase md:text-base">
-        <GlitchText text={title} trigger={inView} speed={25} />
-      </h2>
+    <div ref={ref} className={cn("mb-12 max-w-xl", className)}>
+      {eyebrow && (
+        <motion.p
+          className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-accent"
+          initial={{ opacity: 0, y: 8 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+          transition={{ duration: 0.5 }}
+        >
+          {eyebrow}
+        </motion.p>
+      )}
+      <RevealText
+        as="h2"
+        text={title}
+        trigger={inView}
+        className="font-head text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+      />
       {subtitle && (
         <motion.p
-          className="max-w-lg font-mono text-sm text-arcade-muted leading-relaxed"
+          className="mt-4 text-sm leading-relaxed text-muted"
           initial={{ opacity: 0, y: 10 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
+          transition={{ delay: 0.25, duration: 0.5 }}
         >
           {subtitle}
         </motion.p>
       )}
-    </motion.div>
+    </div>
   );
 }

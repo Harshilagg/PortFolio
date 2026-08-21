@@ -50,7 +50,7 @@ export function TypewriterText({
     <span className={cn("inline-flex items-center", className)}>
       <span>{text}</span>
       <span
-        className="ml-0.5 inline-block h-[1.1em] w-[0.55em] bg-arcade-yellow"
+        className="ml-0.5 inline-block h-[1.1em] w-[0.55em] bg-accent"
         style={{ animation: "type-cursor 0.8s step-end infinite" }}
       />
     </span>
