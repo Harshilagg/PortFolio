@@ -1,54 +1,52 @@
 @import "tailwindcss";
 
 @theme {
-  --color-arcade-bg: var(--bg-color);
-  --color-arcade-surface: var(--surface-color);
-  --color-arcade-card: var(--card-color);
-  --color-arcade-yellow: var(--yellow-color);
-  --color-arcade-blue: var(--blue-color);
-  --color-arcade-red: var(--red-color);
-  --color-arcade-white: var(--white-color);
-  --color-arcade-muted: var(--muted-color);
-  --color-arcade-border: var(--border-color);
-  --color-arcade-border-glow: var(--border-glow-color);
+  --color-canvas: var(--bg-color);
+  --color-surface: var(--surface-color);
+  --color-card: var(--card-color);
+  --color-accent: var(--accent-color);
+  --color-azure: var(--azure-color);
+  --color-coral: var(--coral-color);
+  --color-ink: var(--ink-color);
+  --color-muted: var(--muted-color);
+  --color-line: var(--line-color);
+  --color-line-strong: var(--line-strong-color);
 
-  --font-pixel: "Press Start 2P", monospace;
+  --font-head: "Space Grotesk", "Inter", sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   --font-sans: "Inter", system-ui, sans-serif;
 
   --animate-float: float 6s ease-in-out infinite;
-  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2.5s ease-in-out infinite;
   --animate-blink: blink 1s step-end infinite;
-  --animate-scanline: scanline 8s linear infinite;
-  --animate-shake: shake 0.3s ease-in-out;
   --animate-bounce-subtle: bounce-subtle 2s ease-in-out infinite;
 }
 
 /* ─── Theme Variables ─────────────────────────────────────── */
 :root, [data-theme="night"] {
-  --bg-color: #070707;
-  --surface-color: #0d0d0d;
-  --card-color: #111111;
-  --yellow-color: #FFD34E;
-  --blue-color: #5AC8FA;
-  --red-color: #FF6B6B;
-  --white-color: #F5F5F5;
-  --muted-color: #888888;
-  --border-color: #252525;
-  --border-glow-color: #333333;
+  --bg-color: #0a0a0d;
+  --surface-color: #101014;
+  --card-color: #131317;
+  --accent-color: #6c63ff;
+  --azure-color: #5ac8fa;
+  --coral-color: #ff6b6b;
+  --ink-color: #f2f2f5;
+  --muted-color: #93939f;
+  --line-color: rgba(255, 255, 255, 0.09);
+  --line-strong-color: rgba(255, 255, 255, 0.18);
 }
 
 [data-theme="day"] {
-  --bg-color: #79BAEA; /* Pixel art sky blue */
-  --surface-color: #8CCBFA;
-  --card-color: #FDF9F1; /* Warm cream */
-  --yellow-color: #F59E0B; /* Deeper amber for contrast */
-  --blue-color: #2563EB;
-  --red-color: #DC2626;
-  --white-color: #1A1A1A; /* Dark text for day mode */
-  --muted-color: #5A5A5A;
-  --border-color: #D1D5DB;
-  --border-glow-color: #9CA3AF;
+  --bg-color: #fafafa;
+  --surface-color: #f2f2f5;
+  --card-color: #ffffff;
+  --accent-color: #5751e0;
+  --azure-color: #0891b2;
+  --coral-color: #dc2626;
+  --ink-color: #16161a;
+  --muted-color: #62626d;
+  --line-color: rgba(0, 0, 0, 0.09);
+  --line-strong-color: rgba(0, 0, 0, 0.18);
 }
 
 /* ─── Keyframes ───────────────────────────────────────────── */
@@ -58,18 +56,13 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 4px rgba(255, 211, 78, 0.2); }
-  50% { box-shadow: 0 0 16px rgba(255, 211, 78, 0.4), 0 0 32px rgba(255, 211, 78, 0.1); }
+  0%, 100% { box-shadow: 0 0 4px rgba(108, 99, 255, 0.2); }
+  50% { box-shadow: 0 0 18px rgba(108, 99, 255, 0.35), 0 0 34px rgba(108, 99, 255, 0.1); }
 }
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
 }
 
 @keyframes shake {
@@ -83,59 +76,19 @@
   50% { transform: translateY(-4px); }
 }
 
-@keyframes counter-fill {
-  from { width: 0%; }
-}
-
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes neon-pulse {
-  0%, 100% { opacity: 0.8; filter: brightness(1); }
-  50% { opacity: 1; filter: brightness(1.3); }
-}
-
-@keyframes xp-float {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-40px) scale(0.8); }
-}
-
-@keyframes boot-flicker {
-  0%, 100% { opacity: 1; }
-  5% { opacity: 0.8; }
-  10% { opacity: 1; }
-  15% { opacity: 0.6; }
-  20% { opacity: 1; }
-}
-
-@keyframes pixel-rain {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-
-@keyframes glow-breathe {
-  0%, 100% { box-shadow: 0 0 4px rgba(255, 211, 78, 0.1); }
-  50% { box-shadow: 0 0 16px rgba(255, 211, 78, 0.25), 0 0 32px rgba(255, 211, 78, 0.08); }
-}
-
-@keyframes glow-border {
-  0%, 100% { border-color: rgba(255, 211, 78, 0.15); }
-  50% { border-color: rgba(255, 211, 78, 0.4); }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes type-cursor {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes sheen {
+  0% { transform: translateX(-120%) skewX(-15deg); }
+  100% { transform: translateX(220%) skewX(-15deg); }
 }
 
 /* ─── Base Styles ─────────────────────────────────────────── */
@@ -152,75 +105,66 @@ html {
 }
 
 body {
-  background-color: var(--color-arcade-bg);
-  color: var(--color-arcade-white);
-  font-family: var(--font-mono);
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
 ::selection {
-  background: rgba(255, 211, 78, 0.3);
+  background: rgba(108, 99, 255, 0.35);
   color: #fff;
 }
 
 /* ─── Custom Scrollbar ────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-arcade-bg);
+  background: var(--color-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-arcade-border);
-  border-radius: 0;
+  background: var(--color-line-strong);
+  border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-arcade-yellow);
+  background: var(--color-accent);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-arcade-border) var(--color-arcade-bg);
+  scrollbar-color: var(--color-line-strong) var(--color-canvas);
 }
 
-/* ─── Pixel Border Utility ────────────────────────────────── */
-.pixel-border {
-  border: 2px solid var(--color-arcade-border);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 0 0 1px rgba(0, 0, 0, 0.5);
+/* ─── Ambient dot-grid backdrop ───────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
 }
 
-.pixel-border-glow {
-  border: 2px solid var(--color-arcade-border);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 0 8px rgba(255, 211, 78, 0.08),
-    0 0 0 1px rgba(0, 0, 0, 0.5);
+/* ─── Card / Panel utility ────────────────────────────────── */
+.panel {
+  border: 1px solid var(--color-line);
+  background: var(--color-card);
+  border-radius: 1rem;
 }
 
-/* ─── Glow Effects ────────────────────────────────────────── */
-.glow-yellow {
-  text-shadow: 0 0 8px rgba(255, 211, 78, 0.5), 0 0 24px rgba(255, 211, 78, 0.15);
+.panel-hover {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.panel-hover:hover {
+  border-color: var(--color-line-strong);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.45);
 }
 
-.glow-blue {
-  text-shadow: 0 0 8px rgba(90, 200, 250, 0.5), 0 0 24px rgba(90, 200, 250, 0.15);
+/* ─── Buttons ──────────────────────────────────────────────── */
+.btn-press {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
-
-.glow-red {
-  text-shadow: 0 0 8px rgba(255, 107, 107, 0.5), 0 0 24px rgba(255, 107, 107, 0.15);
-}
-
-/* ─── Button Press Effect ─────────────────────────────────── */
-.btn-pixel {
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-  image-rendering: pixelated;
-}
-.btn-pixel:active {
-  transform: translateY(2px);
-  box-shadow: none !important;
+.btn-press:active {
+  transform: scale(0.97);
 }
 
 /* ─── Section Spacing ─────────────────────────────────────── */

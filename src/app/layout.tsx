@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Press_Start_2P } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,10 +14,10 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const pressStart = Press_Start_2P({
-  weight: "400",
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-pixel",
+  weight: ["500", "600", "700"],
+  variable: "--font-head",
   display: "swap",
 });
 
@@ -65,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrains.variable} ${pressStart.variable}`}
+      className={`${inter.variable} ${jetbrains.variable} ${spaceGrotesk.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -83,7 +83,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-arcade-bg font-mono text-arcade-white antialiased transition-colors duration-1000">
+      <body className="bg-canvas font-sans text-ink antialiased transition-colors duration-500">
         <ThemeProvider>
           {children}
         </ThemeProvider>
