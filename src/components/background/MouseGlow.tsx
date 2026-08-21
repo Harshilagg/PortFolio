@@ -26,7 +26,7 @@ export function MouseGlow() {
     };
   }, [isVisible]);
 
-  const glowColor = isDay ? "rgba(255, 255, 255, 0.3)" : "rgba(255, 211, 78, 0.08)";
+  const glowColor = isDay ? "rgba(255, 255, 255, 0.3)" : "rgba(108, 99, 255, 0.08)";
 
   return (
     <motion.div

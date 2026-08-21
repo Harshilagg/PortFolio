@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { WorldBackground } from "@/components/background/WorldBackground";
+import { AmbientBackground } from "@/components/background/AmbientBackground";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -26,13 +26,13 @@ export default function Home() {
       <BootSequence />
 
       {/* Background layers */}
-      <WorldBackground />
+      <AmbientBackground />
 
       {/* Navigation */}
       <Navbar onTerminalToggle={() => setTerminalOpen((v) => !v)} />
 
       {/* Main content */}
-      <main className="relative z-10 pb-8">
+      <main className="relative z-10">
         <Hero />
         <About />
         <Projects />
