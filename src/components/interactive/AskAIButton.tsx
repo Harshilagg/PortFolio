@@ -17,7 +17,7 @@ export function AskAIButton({ onTerminalToggle }: AskAIButtonProps) {
     >
       <motion.button
         onClick={onTerminalToggle}
-        className="group relative flex items-center gap-2 border-2 border-arcade-yellow bg-arcade-card px-4 py-2.5 font-pixel text-[9px] text-arcade-yellow uppercase transition-all duration-300 hover:bg-arcade-yellow/10 hover:shadow-[0_0_20px_rgba(255,211,78,0.2)]"
+        className="group relative flex items-center gap-2 rounded-full border border-accent bg-card px-4 py-2.5 font-mono text-[11px] text-accent transition-all duration-300 hover:bg-accent/10 hover:shadow-[0_0_20px_rgba(108,99,255,0.2)]"
         animate={{ y: [0, -3, 0] }}
         transition={{
           duration: 3,
@@ -27,9 +27,8 @@ export function AskAIButton({ onTerminalToggle }: AskAIButtonProps) {
         data-interactive
         aria-label="Ask Harshil AI - Open Terminal"
       >
-        {/* Pixel robot icon */}
-        <div className="relative flex h-6 w-6 items-center justify-center border border-arcade-yellow/30 bg-arcade-bg">
-          <MessageSquare size={12} className="text-arcade-yellow" />
+        <div className="relative flex h-6 w-6 items-center justify-center rounded-full border border-accent/30 bg-canvas">
+          <MessageSquare size={12} className="text-accent" />
           {/* Pulsing glow dot */}
           <motion.div
             className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-green-500"
@@ -47,9 +46,8 @@ export function AskAIButton({ onTerminalToggle }: AskAIButtonProps) {
         <span className="hidden sm:inline">Ask Harshil AI</span>
 
         {/* Tooltip for mobile */}
-        <div className="absolute bottom-full right-0 mb-2 whitespace-nowrap border border-arcade-border bg-arcade-bg px-2 py-1 font-pixel text-[7px] text-arcade-muted opacity-0 transition-opacity group-hover:opacity-100 pointer-events-none">
+        <div className="pointer-events-none absolute right-0 bottom-full mb-2 whitespace-nowrap rounded-lg border border-line bg-canvas px-2.5 py-1.5 font-mono text-[10px] text-muted opacity-0 transition-opacity group-hover:opacity-100">
           Open terminal for commands
-          <div className="absolute top-full right-4 h-0 w-0 border-x-4 border-t-4 border-x-transparent border-t-arcade-border" />
         </div>
       </motion.button>
     </motion.div>

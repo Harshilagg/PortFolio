@@ -116,27 +116,27 @@ export function Terminal({ open, onClose }: TerminalProps) {
 
           {/* Terminal window */}
           <motion.div
-            className="relative w-full max-w-2xl border-2 border-arcade-border bg-arcade-bg shadow-2xl"
+            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-line bg-canvas shadow-2xl"
             initial={{ y: 40, opacity: 0, scale: 0.97 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 40, opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Title bar */}
-            <div className="flex items-center justify-between border-b border-arcade-border px-4 py-2">
+            <div className="flex items-center justify-between border-b border-line bg-surface px-4 py-2.5">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
-                  <span className="h-2.5 w-2.5 bg-arcade-red" />
-                  <span className="h-2.5 w-2.5 bg-arcade-yellow" />
-                  <span className="h-2.5 w-2.5 bg-green-500" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-coral/70" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-accent/70" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
                 </div>
-                <span className="font-pixel text-[8px] text-arcade-muted uppercase">
+                <span className="font-mono text-[11px] text-muted">
                   harshil@portfolio:~
                 </span>
               </div>
               <button
                 onClick={onClose}
-                className="text-arcade-muted transition-colors hover:text-arcade-white"
+                className="text-muted transition-colors hover:text-ink"
               >
                 <X size={14} />
               </button>
@@ -152,8 +152,8 @@ export function Terminal({ open, onClose }: TerminalProps) {
                   key={i}
                   className={
                     line.type === "input"
-                      ? "text-arcade-yellow"
-                      : "whitespace-pre-wrap text-arcade-muted/80"
+                      ? "text-accent"
+                      : "whitespace-pre-wrap text-muted/80"
                   }
                 >
                   {line.text}
@@ -162,14 +162,14 @@ export function Terminal({ open, onClose }: TerminalProps) {
 
               {/* Input line */}
               <div className="mt-1 flex items-center gap-2">
-                <span className="text-arcade-yellow">{">"}</span>
+                <span className="text-accent">{">"}</span>
                 <input
                   ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="flex-1 border-none bg-transparent font-mono text-xs text-arcade-white outline-none"
+                  className="flex-1 border-none bg-transparent font-mono text-xs text-ink outline-none"
                   spellCheck={false}
                   autoComplete="off"
                 />

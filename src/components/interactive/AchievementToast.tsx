@@ -107,45 +107,45 @@ function AchievementToast({ toast }: { toast: Achievement | null }) {
         >
           {/* Flash */}
           <motion.div
-            className="absolute inset-0 bg-arcade-yellow/20 blur-xl"
+            className="absolute inset-0 bg-accent/20 blur-xl"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
           />
 
-          <div className="relative flex items-center gap-4 border-2 border-arcade-yellow bg-arcade-bg px-6 py-4 shadow-[0_0_30px_rgba(255,211,78,0.15)]">
+          <div className="relative flex items-center gap-4 rounded-2xl border border-accent bg-canvas px-6 py-4 shadow-[0_0_30px_rgba(108,99,255,0.15)]">
             {/* Trophy icon */}
             <motion.div
               initial={{ rotate: -20, scale: 0.5 }}
               animate={{ rotate: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 400, damping: 12 }}
             >
-              <Trophy size={24} className="text-arcade-yellow" />
+              <Trophy size={24} className="text-accent" />
             </motion.div>
 
             <div>
-              <p className="font-pixel text-[9px] text-arcade-yellow uppercase tracking-wider">
-                🏆 Achievement Unlocked!
+              <p className="font-mono text-[10px] uppercase tracking-wider text-accent">
+                Achievement unlocked
               </p>
-              <p className="font-pixel text-[10px] text-arcade-white mt-0.5">
+              <p className="mt-0.5 font-head text-[13px] font-semibold text-ink">
                 &quot;{toast.title}&quot;
               </p>
-              <p className="font-mono text-[9px] text-arcade-muted mt-0.5">
+              <p className="mt-0.5 font-mono text-[10px] text-muted">
                 {toast.description}
               </p>
             </div>
 
             {/* XP badge */}
             <motion.div
-              className="flex flex-col items-center border border-arcade-yellow/30 bg-arcade-yellow/5 px-2 py-1"
+              className="flex flex-col items-center rounded-lg border border-accent/30 bg-accent/5 px-2.5 py-1.5"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 400 }}
             >
-              <span className="font-pixel text-[10px] text-arcade-yellow">
+              <span className="font-mono text-[11px] font-medium text-accent">
                 +{toast.xp}
               </span>
-              <span className="font-pixel text-[6px] text-arcade-muted">XP</span>
+              <span className="font-mono text-[8px] text-muted">XP</span>
             </motion.div>
           </div>
         </motion.div>
