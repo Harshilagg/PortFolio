@@ -1,56 +1,40 @@
 "use client";
 
-import { useState } from "react";
-import { AmbientBackground } from "@/components/background/AmbientBackground";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
+import { Manifesto } from "@/components/sections/Manifesto";
+import { SelectedWork } from "@/components/sections/SelectedWork";
 import { About } from "@/components/sections/About";
-import { Projects } from "@/components/sections/Projects";
-import { Experience } from "@/components/sections/Experience";
-import { Skills } from "@/components/sections/Skills";
-import { CompetitiveProgramming } from "@/components/sections/CompetitiveProgramming";
+import { Experiments } from "@/components/sections/Experiments";
 import { Contact } from "@/components/sections/Contact";
-import { Terminal } from "@/components/interactive/Terminal";
-import { KonamiCode } from "@/components/interactive/KonamiCode";
-import { BootSequence } from "@/components/interactive/BootSequence";
-import { AskAIButton } from "@/components/interactive/AskAIButton";
-import { AchievementProvider } from "@/components/interactive/AchievementToast";
+import { GrainOverlay } from "@/components/effects/GrainOverlay";
+import { CustomCursor } from "@/components/cursor/CustomCursor";
+import { SmoothScrollProvider } from "@/lib/smooth-scroll";
 
 export default function Home() {
-  const [terminalOpen, setTerminalOpen] = useState(false);
-
   return (
-    <AchievementProvider>
-      {/* Boot sequence (first visit only) */}
-      <BootSequence />
+    <SmoothScrollProvider>
+      {/* Custom cursor */}
+      <CustomCursor />
 
-      {/* Background layers */}
-      <AmbientBackground />
+      {/* Grain + Vignette overlay */}
+      <GrainOverlay />
 
       {/* Navigation */}
-      <Navbar onTerminalToggle={() => setTerminalOpen((v) => !v)} />
+      <Navbar />
 
-      {/* Main content */}
-      <main className="relative z-10">
+      {/* Cinematic sections */}
+      <main>
         <Hero />
+        <Manifesto />
+        <SelectedWork />
         <About />
-        <Projects />
-        <Experience />
-        <Skills />
-        <CompetitiveProgramming />
+        <Experiments />
         <Contact />
       </main>
 
-      {/* Footer */}
-      <div className="relative z-10">
-        <Footer />
-      </div>
-
-      {/* Interactive overlays */}
-      <Terminal open={terminalOpen} onClose={() => setTerminalOpen(false)} />
-      <KonamiCode />
-      <AskAIButton onTerminalToggle={() => setTerminalOpen((v) => !v)} />
-    </AchievementProvider>
+      <Footer />
+    </SmoothScrollProvider>
   );
 }

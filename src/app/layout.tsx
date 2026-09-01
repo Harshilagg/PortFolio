@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,32 +22,27 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-head",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Harshil Aggarwal — Cybersecurity Engineer & Full Stack Developer",
+  title: "Harshil Aggarwal — Cybersecurity Engineer & Creative Developer",
   description:
-    "Portfolio of Harshil Aggarwal — IIT Kharagpur grad, cybersecurity engineer, full-stack developer, and competitive programmer. Building secure, scalable systems.",
+    "Portfolio of Harshil Aggarwal — IIT Kharagpur. Cybersecurity engineer, full-stack developer, competitive programmer. Building secure, scalable systems that feel alive.",
   keywords: [
     "Harshil Aggarwal",
     "Portfolio",
     "Cybersecurity",
     "Full Stack Developer",
+    "Creative Developer",
     "IIT Kharagpur",
     "React",
     "Next.js",
-    "Competitive Programming",
+    "Three.js",
+    "WebGL",
   ],
   authors: [{ name: "Harshil Aggarwal" }],
   openGraph: {
     title: "Harshil Aggarwal — Portfolio",
     description:
-      "Cybersecurity engineer & full-stack developer. IIT Kharagpur. Building secure, scalable systems.",
+      "Cybersecurity engineer & creative developer. IIT Kharagpur. Building secure systems that feel alive.",
     type: "website",
     locale: "en_US",
   },
@@ -47,15 +50,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Harshil Aggarwal — Portfolio",
     description:
-      "Cybersecurity engineer & full-stack developer. IIT Kharagpur.",
+      "Cybersecurity engineer & creative developer. IIT Kharagpur.",
   },
   robots: {
     index: true,
     follow: true,
   },
 };
-
-import { ThemeProvider } from "@/providers/ThemeContext";
 
 export default function RootLayout({
   children,
@@ -65,28 +66,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrains.variable} ${spaceGrotesk.variable}`}
-      suppressHydrationWarning
+      className={`${cormorant.variable} ${inter.variable} ${jetbrains.variable}`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                let theme = localStorage.getItem('theme');
-                if (!theme) {
-                  theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'day' : 'night';
-                }
-                document.documentElement.setAttribute('data-theme', theme);
-              } catch (e) {}
-            `,
-          }}
-        />
-      </head>
-      <body className="bg-canvas font-sans text-ink antialiased transition-colors duration-500">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body className="bg-canvas font-sans text-ink antialiased cursor-none">
+        {children}
       </body>
     </html>
   );

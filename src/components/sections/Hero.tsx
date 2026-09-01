@@ -1,144 +1,177 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, ArrowRight } from "lucide-react";
-import { PERSONAL, PROJECTS, EXPERIENCE, COMPETITIVE } from "@/lib/data";
-import { RevealText } from "@/components/shared/RevealText";
-import { TypewriterText } from "@/components/shared/TypewriterText";
-import { Divider } from "@/components/shared/Divider";
-import { GithubIcon, LinkedinIcon } from "@/components/shared/SocialIcons";
-import { HeroVisual } from "./HeroVisual";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import dynamic from "next/dynamic";
+import { PERSONAL } from "@/lib/data";
 
-const stagger = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1 } },
-};
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
-};
-
-const STATS = [
-  { label: "Codeforces rating", value: `${COMPETITIVE[0].rating}` },
-  { label: "Projects shipped", value: `${PROJECTS.length}+` },
-  { label: "Alma mater", value: "IIT Kharagpur" },
-  { label: "Internships", value: `${EXPERIENCE.filter((e) => e.type === "intern").length}` },
-];
+const HeroScene = dynamic(() => import("./HeroScene").then((m) => m.HeroScene), {
+  ssr: false,
+});
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+
+  // Character-by-character reveal on load
+  useEffect(() => {
+    if (!headlineRef.current) return;
+    const chars = headlineRef.current.querySelectorAll(".char");
+    gsap.fromTo(
+      chars,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.03,
+        delay: 0.3,
+      }
+    );
+
+    // Utility labels fade in
+    const utils = headlineRef.current.parentElement?.querySelectorAll(".util-label");
+    if (utils) {
+      gsap.fromTo(
+        utils,
+        { opacity: 0 },
+        { opacity: 1, duration: 1, delay: 1.5, stagger: 0.1 }
+      );
+    }
+  }, []);
+
+  // Pointer tracking for 3D parallax
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPointer({
+        x: (e.clientX / window.innerWidth - 0.5) * 2,
+        y: (e.clientY / window.innerHeight - 0.5) * 2,
+      });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // Scroll tracking for hero transition
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollProgress = Math.min(scrollY / (typeof window !== "undefined" ? window.innerHeight : 1000), 1);
+
+  const heroWords = ["BUILDING", "SYSTEMS", "THAT FEEL", "ALIVE."];
+
   return (
     <section
+      ref={sectionRef}
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-28 pb-16"
+      className="relative flex min-h-[100dvh] flex-col justify-between overflow-hidden"
+      style={{
+        transform: `scale(${1 + scrollProgress * 0.05})`,
+        opacity: 1 - scrollProgress * 0.8,
+      }}
     >
-      <motion.div
-        className="mx-auto w-full max-w-6xl"
-        variants={stagger}
-        initial="hidden"
-        animate="show"
-      >
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12">
-          {/* Left column */}
-          <div className="lg:col-span-7">
-            <motion.div variants={fadeUp} className="mb-6 flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4ade80] opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#4ade80]" />
-              </span>
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-                {PERSONAL.status}
-              </span>
-            </motion.div>
+      {/* 3D scene layer (behind text) */}
+      <div className="absolute inset-0 z-0" data-cursor="INTERACT">
+        <HeroScene
+          pointerX={pointer.x}
+          pointerY={pointer.y}
+          scrollProgress={scrollProgress}
+        />
+      </div>
 
-            <motion.div variants={fadeUp} className="mb-5">
-              <RevealText
-                as="h1"
-                text={PERSONAL.name}
-                className="font-head text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl"
-              />
-              <h2 className="mt-3 font-head text-2xl font-medium leading-tight text-muted sm:text-3xl">
-                <span className="text-ink">Cybersecurity Engineer</span> &amp;{" "}
-                <span className="text-accent">Full Stack Developer</span>
-              </h2>
-            </motion.div>
+      {/* Atmospheric gradient */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 50%, transparent 0%, rgba(10,10,10,0.7) 100%)",
+        }}
+      />
 
-            <motion.div variants={fadeUp} className="mb-8 max-w-xl font-mono text-sm leading-relaxed text-muted">
-              <TypewriterText strings={[...PERSONAL.roles]} speed={55} pauseTime={2200} />
-            </motion.div>
+      {/* Top bar — wordmark + index */}
+      <div className="relative z-10 flex items-start justify-between px-6 pt-6 md:px-12 md:pt-10">
+        <div className="util-label opacity-0">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+            {PERSONAL.wordmark}
+          </span>
+        </div>
+        <div className="util-label opacity-0">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+            01 / 07
+          </span>
+        </div>
+      </div>
 
-            <motion.p
-              variants={fadeUp}
-              className="mb-9 max-w-lg text-[15px] leading-relaxed text-muted"
-            >
-              {PERSONAL.bio}
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="mb-9 flex flex-wrap items-center gap-3">
-              <a
-                href="#projects"
-                data-interactive
-                className="btn-press group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-[0_8px_24px_-8px_rgba(108,99,255,0.6)] transition-opacity hover:opacity-90"
+      {/* Center — Editorial Headline */}
+      <div className="relative z-10 flex flex-1 items-center">
+        <div
+          ref={headlineRef}
+          className="w-full px-6 md:px-12 lg:px-20"
+        >
+          {heroWords.map((word, lineIdx) => (
+            <div key={lineIdx} className="overflow-hidden">
+              <h1
+                className="text-display text-ink-strong"
+                style={{
+                  fontSize: lineIdx === 3 ? "clamp(48px, 10vw, 140px)" : "clamp(52px, 12vw, 160px)",
+                  fontStyle: lineIdx === 3 ? "italic" : "normal",
+                  marginLeft: lineIdx === 1 ? "8vw" : lineIdx === 2 ? "4vw" : 0,
+                  lineHeight: 0.92,
+                }}
               >
-                View work
-                <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href={`mailto:${PERSONAL.email}`}
-                data-interactive
-                className="btn-press inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-surface"
-              >
-                Get in touch
-                <Mail size={14} />
-              </a>
-            </motion.div>
+                {word.split("").map((char, charIdx) => (
+                  <span key={`${lineIdx}-${charIdx}`} className="char">
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </h1>
+            </div>
+          ))}
 
-            <motion.div variants={fadeUp} className="flex items-center gap-5">
-              <a
-                href={PERSONAL.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-interactive
-                className="text-muted transition-colors hover:text-ink"
-                aria-label="GitHub"
-              >
-                <GithubIcon size={19} />
-              </a>
-              <a
-                href={PERSONAL.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-interactive
-                className="text-muted transition-colors hover:text-ink"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon size={19} />
-              </a>
-            </motion.div>
+          {/* Subtitle */}
+          <div className="util-label opacity-0 mt-8 md:mt-12 ml-1">
+            <p className="max-w-md text-sm leading-relaxed text-muted md:text-base">
+              {PERSONAL.title}
+            </p>
           </div>
+        </div>
+      </div>
 
-          {/* Right column — visual */}
-          <div className="flex justify-center lg:col-span-5 lg:justify-end">
-            <HeroVisual />
+      {/* Bottom bar — utility labels + scroll indicator */}
+      <div className="relative z-10 flex items-end justify-between px-6 pb-8 md:px-12 md:pb-12">
+        {/* Left utility */}
+        <div className="util-label opacity-0 flex items-center gap-6">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/60">
+            {PERSONAL.education.institute}
+          </span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/60">
+            {PERSONAL.location}
+          </span>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="util-label opacity-0 flex flex-col items-center gap-2">
+          <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-muted/50">
+            Scroll
+          </span>
+          <div className="h-10 w-px overflow-hidden">
+            <div className="h-full w-full bg-muted/40 scroll-indicator-line" />
           </div>
         </div>
 
-        {/* Stat tiles */}
-        <motion.div
-          variants={fadeUp}
-          className="mt-20 grid grid-cols-2 gap-3 sm:grid-cols-4"
-        >
-          {STATS.map((stat) => (
-            <div key={stat.label} className="panel px-4 py-4">
-              <p className="font-head text-xl font-semibold text-ink sm:text-2xl">
-                {stat.value}
-              </p>
-              <p className="mt-1 font-mono text-[11px] text-muted">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
-
-        <Divider className="mt-16" />
-      </motion.div>
+        {/* Right utility */}
+        <div className="util-label opacity-0">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/60">
+            2026
+          </span>
+        </div>
+      </div>
     </section>
   );
 }

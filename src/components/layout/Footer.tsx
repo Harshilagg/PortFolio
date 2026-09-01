@@ -1,45 +1,40 @@
 "use client";
 
 import { PERSONAL } from "@/lib/data";
-import { Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/shared/SocialIcons";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line px-6 py-8">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-        <p className="font-mono text-[12px] text-muted">
-          © {new Date().getFullYear()} {PERSONAL.name}. Built with care.
-        </p>
+    <footer className="border-t border-line/20 px-6 py-8 md:px-12 md:py-10">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted/40">
+          &copy; {new Date().getFullYear()} {PERSONAL.name}
+        </span>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-6">
           <a
             href={PERSONAL.github}
             target="_blank"
             rel="noopener noreferrer"
-            data-interactive
-            className="text-muted transition-colors hover:text-ink"
-            aria-label="GitHub"
+            data-cursor="↗"
+            className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted/40 transition-colors hover:text-muted"
           >
-            <GithubIcon size={16} />
+            GitHub
           </a>
           <a
             href={PERSONAL.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            data-interactive
-            className="text-muted transition-colors hover:text-ink"
-            aria-label="LinkedIn"
+            data-cursor="↗"
+            className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted/40 transition-colors hover:text-muted"
           >
-            <LinkedinIcon size={16} />
+            LinkedIn
           </a>
           <a
             href={`mailto:${PERSONAL.email}`}
-            data-interactive
-            className="text-muted transition-colors hover:text-ink"
-            aria-label="Email"
+            data-cursor="↗"
+            className="font-mono text-[9px] uppercase tracking-[0.15em] text-muted/40 transition-colors hover:text-muted"
           >
-            <Mail size={16} />
+            Email
           </a>
         </div>
       </div>
