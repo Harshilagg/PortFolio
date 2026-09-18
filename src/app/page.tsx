@@ -7,6 +7,7 @@ import { Manifesto } from "@/components/sections/Manifesto";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { About } from "@/components/sections/About";
 import { Experiments } from "@/components/sections/Experiments";
+import { TheRoom } from "@/components/sections/TheRoom";
 import { Contact } from "@/components/sections/Contact";
 import { GrainOverlay } from "@/components/effects/GrainOverlay";
 import { CustomCursor } from "@/components/cursor/CustomCursor";
@@ -30,6 +31,7 @@ export default function Home() {
         <Manifesto />
         <SelectedWork />
         <About />
+        <TheRoom />
         <Experiments />
         <Contact />
       </main>
